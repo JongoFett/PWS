@@ -1,0 +1,3 @@
+addr,mac_addr,mode,misc
+ 192.168.0.2,9c:5c:8e:00:ab:df,[ether],ens33
+192.168.0.1,40:0d:10:3f:05:d0,[ether],ens33 
