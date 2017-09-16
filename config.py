@@ -25,5 +25,5 @@ host_config['mac'] = input('What MAC address? ')     # mutates the parser
 #Next stage is to look this based on how many MACs are found on the network
 #When get_mac.py is run
 
-with open('wol.ini', 'w') as configfile:
+with open('.wol.ini', 'w') as configfile:
    config.write(configfile)
