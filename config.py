@@ -6,6 +6,7 @@
 import os
 import sys
 import subprocess
+import csv
 
 #This is the subprocess which gets and returns the systems Py version
 def run_command(command):
@@ -31,9 +32,25 @@ if line == py_v:
 else:
     config = configparser.ConfigParser()
 
+#If statement to check the version, depending on result c_reader changes it's command
+py_v = 'Python 2.7'
+if line == py_v:
+    c_reader = csv.reader(open('./output/macs.csv', 'rb'), delimiter=',')
+else:
+    c_reader = csv.reader(open('./output/macs.csv', newline=''), delimiter=',')
 
 #ask user the broadcast address
 broad_cast = input("What is your broadcast address? ")
+
+#Create & return list of mac address'
+col_2 = list(zip(*c_reader))[1]
+mac_list = col_2[1::]
+#Return one mac & a time & ask to name it
+for macs in mac_list[0::]:
+    host_name = input('{} is the mac, what name? '.format(macs))
+    config[host_name] = {}
+    host_config = config[host_name]
+    host_config['mac'] = macs
 
 #.ini settings
 config['DEFAULT'] = {'ServerAliveInterval': '45',
@@ -43,12 +60,6 @@ config['DEFAULT'] = {'ServerAliveInterval': '45',
 #This is where the broadcast address is set
 config['General'] = {}
 config['General']['broadcast'] = broad_cast
-
-#This is where the MAC is set/saved
-host_name = input('What would you like to name the system? ')
-config[host_name] = {}
-host_config = config[host_name]
-host_config['mac'] = input('What MAC address? ')     # mutates the parser
 
 #Next stage is to look this based on how many MACs are found on the network
 #When get_mac.py is run
