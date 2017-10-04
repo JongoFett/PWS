@@ -40,14 +40,22 @@ else:
     c_reader = csv.reader(open('./output/macs.csv', newline=''), delimiter=',')
 
 #ask user the broadcast address
-broad_cast = input("What is your broadcast address? ")
+while True:
+    broad_cast = input("If you broadbast address is 192.168.0.255 then 'y'\n")
+    if broad_cast == 'y':
+        broad_cast = '192.168.0.255'
+        break
+    else:
+        broad_cast = input('What the fuck is it then? ')
+        print('Your new broadcast address is '+broad_cast)
+        break
 
 #Create & return list of mac address'
 col_2 = list(zip(*c_reader))[1]
 mac_list = col_2[1::]
 #Return one mac & a time & ask to name it
 for macs in mac_list[0::]:
-    host_name = input('{} is the mac, what name? '.format(macs))
+    host_name = input('What to call mac {} \n'.format(macs))
     config[host_name] = {}
     host_config = config[host_name]
     host_config['mac'] = macs
